@@ -12,11 +12,13 @@ class RegistrationController extends Controller
     {
     	$this->validate($request, [
     		'email' => 'required|email',
-    		'password' => 'required|min:4'
+    		'password' => 'required|min:4',
+    		'name' => 'required',
+
     	]);
 
     	$user = User::create([
-    		'name' => $request->email,
+    		'name' => $request->name,
     		'email' => $request->email,
     		'password' => bcrypt($request->password)
     	]);
@@ -41,11 +43,7 @@ class RegistrationController extends Controller
     	{
 			if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
 			{
-				return [
-					'user' => $request->email,
-					'status' => 'success',
-					'message' => 'User logged in.'
-				];
+				return Auth::user();
 			}
 			else
 			{
