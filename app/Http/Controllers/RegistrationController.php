@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use App\UserInfo;
 
 class RegistrationController extends Controller
 {
@@ -14,15 +15,39 @@ class RegistrationController extends Controller
     		'email' => 'required|email',
     		'password' => 'required|min:4',
     		'name' => 'required',
-
+    		'pet' => 'required',
+    		'address' => 'required'
     	]);
 
-    	$user = User::create([
-    		'name' => $request->name,
-    		'email' => $request->email,
-    		'password' => bcrypt($request->password)
-    	]);
-    	return $user;
+    	try{
+	    	$user = User::create([
+	    		'name' => $request->name,
+	    		'email' => $request->email,
+	    		'password' => bcrypt($request->password)
+	    	]);
+
+	    	UserInfo::create([
+	    		'user_id' => $user->id,
+	    		'pet_name' => $request->pet,
+	    		'address' => $request->address
+	    	]);
+
+	    	$response = [
+	    		'status' => 'success',
+	    		'name' => $user->name,
+	    		'email' => $user->email,
+	    		'id' => $user->id,
+	    		'message' => 'User registered successfully',
+	    		'pet' => $user->userinfo->pet_name
+	    	];
+	    }catch (\Exception $e){
+	    	$response = [
+	    		'status' => 'error',
+	    		'message' => 'User already registered.'
+	    	];
+	    }
+
+    	return $response;
     }
 
     public function test()
@@ -48,7 +73,8 @@ class RegistrationController extends Controller
 					'status' => 'success',
 					'message' => 'User logged in.',
 					'name' => Auth::user()->name,
-					'id' => Auth::user()->id
+					'id' => Auth::user()->id,
+					'pet' => Auth::user()->userinfo->pet_name
 				];
 			}
 			else
