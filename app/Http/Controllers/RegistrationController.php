@@ -43,7 +43,13 @@ class RegistrationController extends Controller
     	{
 			if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
 			{
-				return Auth::user();
+				return [
+					'email' => Auth::user()->email,
+					'status' => 'success',
+					'message' => 'User logged in.',
+					'name' => Auth::user()->name,
+					'id' => Auth::user()->id
+				];
 			}
 			else
 			{
