@@ -37,6 +37,6 @@ class eventTrigger implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('petfeed');
+        return new Channel('petfeed');
     }
 }
