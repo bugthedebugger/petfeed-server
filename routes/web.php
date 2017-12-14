@@ -19,9 +19,11 @@ Route::get('/', function () {
 //ROUTE CONTROL
 Route::post('/register', 'RegistrationController@register')->name('user.register');
 Route::post('/login', 'RegistrationController@login')->name('user.login');
+Route::post('/treat', 'FeedingController@treat')->name('user.treat');
 
 
 //TEST ROUTES
 Route::get('/test', 'RegistrationController@test')->name('user.test');
 Route::get('/test/register', 'RegistrationController@register')->name('user.register.test');
 Route::get('/test/login', 'RegistrationController@login')->name('user.login.test');
+Route::get('/test/treat', 'FeedingController@treat')->name('user.treat.test');
