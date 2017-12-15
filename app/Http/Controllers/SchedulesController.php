@@ -10,15 +10,57 @@ use App\User;
 class SchedulesController extends Controller
 {
 
+    private static function checkUser($email, $id)
+    {
+        $user_check = User::where('id', $id)->where('email', $email)->first();
+
+        if( !empty($user_check) )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public function getStatus(Request $request)
+    {
+        $email = $request->email;
+        $id = $request->id;
+
+        $user_check = $this->checkUser($email, $id);
+
+        if( $user_check )
+        {
+            $data = [
+                'get' => 'status',
+                'user' => $email
+            ];
+            $response = [
+                'status' => 'success'
+            ];
+            event(new eventTrigger($data));
+            return $response;
+        }
+        else
+        {
+            $response = [
+                'status' => 'error'
+            ];
+            return $response;
+        }
+
+    }
 
     public function getSchedule(Request $request)
     {
     	$email = $request->email;
     	$id = $request->id;
 
-    	$user_check = User::where('id', $id)->where('email', $email)->first();
+    	$user_check = $this->checkUser($email, $id);
 
-    	if( !empty($user_check) )
+    	if( $user_check )
     	{
     		$data = [
 				'get' => 'schedule',
@@ -50,9 +92,9 @@ class SchedulesController extends Controller
         $email = $request->email;
         $id = $request->id;
 
-        $user_check = User::where('id', $id)->where('email', $email)->first();
+        $user_check = $this->checkUser($email, $id);
 
-        if( !empty($user_check) )
+        if( $user_check )
         {
 
             $schedule_data = [];
