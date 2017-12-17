@@ -30,4 +30,4 @@ Route::get('/test/treat', 'FeedingController@treat')->name('user.treat.test');
 Route::get('/test/schedule/get/schedule', 'SchedulesController@getSchedule')->name('user.test.get.schedule');
 Route::get('/test/schedule/set', 'SchedulesController@setSchedule')->name('user.test.set.schedule');
 Route::get('/test/schedule/create', 'SchedulesController@create')->name('user.test.create.schedule');
-Route::get('/test/schedule/get/status', 'SchedulesController@getStatus')->name('user.test.get.status');
+Route::get('/test/get/status', 'SchedulesController@getStatus')->name('user.test.get.status');
