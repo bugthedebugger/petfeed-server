@@ -26,9 +26,13 @@ class FeedingController extends Controller
 				'status' => 'success'
 			];
 			event(new eventTrigger($data));
-			return 'feeding';
+			return $response;
     	}
     	else
-    		return 'error';
+    	{	$response = [
+				'status' => 'error'
+			];
+    		return $response;
+    	}
     }
 }
