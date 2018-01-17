@@ -96,7 +96,7 @@ class SchedulesController extends Controller
 
         if( $user_check )
         {
-
+            return ['status' => 'user check passed!'];
             $schedule_data = [];
             $day_count = count($request->day);
 
