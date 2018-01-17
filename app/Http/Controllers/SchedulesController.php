@@ -82,6 +82,14 @@ class SchedulesController extends Controller
     	}
     }
 
+    public function setSchedule(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+    }
+
     public function create()
     {
         return view('schedule');
