@@ -94,6 +94,8 @@ class SchedulesController extends Controller
 
         $user_check = $this->checkUser($email, $id);
 
+        return $request->all();
+
         if( $user_check )
         {
             return ['status' => 'user check passed!'];
