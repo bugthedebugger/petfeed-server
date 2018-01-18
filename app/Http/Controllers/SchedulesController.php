@@ -92,9 +92,11 @@ class SchedulesController extends Controller
         $email = $request->email;
         $id = $request->id;
 
+        return $request->all();
+
         $user_check = $this->checkUser($email, $id);
 
-        return $request->all();
+
 
         if( $user_check )
         {
