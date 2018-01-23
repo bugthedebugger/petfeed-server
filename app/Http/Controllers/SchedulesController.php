@@ -92,7 +92,8 @@ class SchedulesController extends Controller
         $email = $request->email;
         $id = $request->id;
 
-        return $request->all();
+        // \Log::info($request->email);
+        // return $request->all();
 
         $user_check = $this->checkUser($email, $id);
 
@@ -100,28 +101,46 @@ class SchedulesController extends Controller
 
         if( $user_check )
         {
-            return ['status' => 'user check passed!'];
             $schedule_data = [];
-            $day_count = count($request->day);
+            $data = [];
+            try{
+                $day_count = count($request->day);
 
-            for( $i = 0; $i < $day_count; $i++ )
+                for( $i = 0; $i < $day_count; $i++ )
+                {
+                    array_push($schedule_data, [
+                        'day' => $request->day[$i],
+                        'time' => $request->time[$i]
+                    ]);
+                }
+            }
+            catch(\Exception $e)
             {
-                array_push($schedule_data, [
-                    'day' => $request->day[$i],
-                    'time' => $request->time[$i]
-                ]);
+                
             }
 
-            $data = [
-                'set' => 'schedule',
-                'user' => $email,
-                'data' => $schedule_data
-            ];
-
             // dd($data);
-            $response = [
-                'status' => 'success'
-            ];
+            if( !empty($schedule_data) )
+            {
+                $data = [
+                    'set' => 'schedule',
+                    'user' => $email,
+                    'data' => $schedule_data
+                ];
+
+                $response = [
+                    'status' => 'success'
+                ];
+            }
+            else
+            {
+                $response = [
+                    'status' => 'error',
+                    'message' => 'Empty schedule recieved!'
+                ];
+
+                return $response;
+            }
 
             event(new eventTrigger($data));
             return $response;

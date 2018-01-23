@@ -34,9 +34,9 @@ Route::get('/test/login', 'RegistrationController@login')
 	->name('user.login.test');
 Route::get('/test/treat', 'FeedingController@treat')
 	->name('user.treat.test');
-Route::get('/test/schedule/get/schedule', 'SchedulesController@getSchedule')
+Route::get('/test/schedule/get', 'SchedulesController@getSchedule')
 	->name('user.test.get.schedule');
-Route::get('/test/schedule/set', 'SchedulesController@setSchedule')
+Route::post('/test/schedule/set', 'SchedulesController@setSchedule')
 	->name('user.test.set.schedule');
 Route::get('/test/schedule/create', 'SchedulesController@create')
 	->name('user.test.create.schedule');
