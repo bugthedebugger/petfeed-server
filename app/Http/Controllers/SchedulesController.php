@@ -92,25 +92,24 @@ class SchedulesController extends Controller
         $email = $request->email;
         $id = $request->id;
 
-        // \Log::info($request->email);
-        // return $request->all();
+        //\Log::info($request->all());
+        //return $request->all();
 
         $user_check = $this->checkUser($email, $id);
-
-
 
         if( $user_check )
         {
             $schedule_data = [];
             $data = [];
             try{
-                $day_count = count($request->day);
+                $day_count = count($request->data);
 
                 for( $i = 0; $i < $day_count; $i++ )
                 {
+                    $temp_object = $request->data[$i];
                     array_push($schedule_data, [
-                        'day' => $request->day[$i],
-                        'time' => $request->time[$i]
+                        'day' => $temp_object['day'],
+                        'time' => $temp_object['time']
                     ]);
                 }
             }
